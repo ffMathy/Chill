@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chill", "Chill\Chill.csproj", "{8D10F835-83F1-42EF-A232-EB5806CF9F1C}"
 EndProject
@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chill.Tests", "Chill.Tests\Chill.Tests.csproj", "{10871583-2FE0-4ACD-8787-6D6D285C82D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chill.ExampleApplication", "Chill.ExampleApplication\Chill.ExampleApplication.csproj", "{3659F665-E165-4B19-BF87-981DF7E833B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{10871583-2FE0-4ACD-8787-6D6D285C82D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10871583-2FE0-4ACD-8787-6D6D285C82D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10871583-2FE0-4ACD-8787-6D6D285C82D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3659F665-E165-4B19-BF87-981DF7E833B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3659F665-E165-4B19-BF87-981DF7E833B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3659F665-E165-4B19-BF87-981DF7E833B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3659F665-E165-4B19-BF87-981DF7E833B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
