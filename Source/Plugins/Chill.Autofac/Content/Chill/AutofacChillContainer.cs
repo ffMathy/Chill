@@ -3,6 +3,9 @@ using Autofac.Builder;
 using Autofac.Core;
 using Chill;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using NSubstitute;
 
 namespace Chill.Autofac
 {
@@ -24,6 +27,13 @@ namespace Chill.Autofac
         public AutofacChillContainer(ContainerBuilder containerBuilder)
         {
             _containerBuilder = containerBuilder;
+        }
+
+        public void RegisterFakeBuilder(Func<Type, Object> fakeBuilder)
+        {
+            if (_container != null)
+                throw new InvalidOperationException("Container already built");
+            _containerBuilder.RegisterSource(new FakeRegistrationHandler(fakeBuilder));
         }
 
         protected ILifetimeScope Container
@@ -88,6 +98,55 @@ namespace Chill.Autofac
         {
             return Container.IsRegistered(type);
         }
+
+
+        /// <summary> Resolves unknown interfaces and Mocks using the <see cref="Substitute"/>. </summary>
+        internal class FakeRegistrationHandler : IRegistrationSource
+        {
+            private readonly Func<Type, object> _fakeBuilder;
+
+            public FakeRegistrationHandler(Func<Type, Object> fakeBuilder)
+            {
+                _fakeBuilder = fakeBuilder;
+            }
+
+            /// <summary>
+            /// Retrieve a registration for an unregistered service, to be used
+            /// by the container.
+            /// </summary>
+            /// <param name="service">The service that was requested.</param>
+            /// <param name="registrationAccessor"></param>
+            /// <returns>
+            /// Registrations for the service.
+            /// </returns>
+            public IEnumerable<IComponentRegistration> RegistrationsFor
+                (Service service, Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)
+            {
+                if (service == null)
+                    throw new ArgumentNullException("service");
+
+                var typedService = service as IServiceWithType;
+                if (typedService == null ||
+                    !typedService.ServiceType.IsInterface ||
+                    typedService.ServiceType.IsGenericType &&
+                    typedService.ServiceType.GetGenericTypeDefinition() == typeof(IEnumerable<>) ||
+                    typedService.ServiceType.IsArray ||
+                    typeof(IStartable).IsAssignableFrom(typedService.ServiceType))
+                    return Enumerable.Empty<IComponentRegistration>();
+
+                var rb = RegistrationBuilder.ForDelegate((c, p) => _fakeBuilder(typedService.ServiceType))
+                    .As(service)
+                    .InstancePerLifetimeScope();
+
+                return new[] { rb.CreateRegistration() };
+            }
+
+            public bool IsAdapterForIndividualComponents
+            {
+                get { return false; }
+            }
+        }
+
     }
 
     public static class TestBaseExtensions

@@ -10,7 +10,7 @@ namespace Chill
         {
             
         }
-
-        
     }
+
+    public class Chill
 }

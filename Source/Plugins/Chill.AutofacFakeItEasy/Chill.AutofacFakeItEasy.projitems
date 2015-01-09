@@ -10,6 +10,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Content\Chill\AutofacFakeItEasyMockingContainer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Content\Chill\FakeRegistrationHandler.cs" />
   </ItemGroup>
 </Project>
